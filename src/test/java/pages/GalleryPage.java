@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,16 +16,20 @@ public class GalleryPage extends BasePage {
     private List<WebElement> lstImages;
 
     @FindBy(xpath = "//button[contains(@onclick,'prev')]")
-    private List<WebElement> btnPrev;
+    private WebElement btnPrev;
 
     @FindBy(xpath = "//button[contains(@onclick,'next')]")
-    private List<WebElement> btnNext;
+    private WebElement btnNext;
 
     @FindBy(xpath = "//button[contains(@onclick,'closeModal')]")
-    private List<WebElement> btnCloseModal;
+    private WebElement btnCloseModal;
 
     @FindBy(xpath = "//button[contains(@onclick,'removeImage')]")
-    private List<WebElement> btnRemove;
+    private WebElement btnRemove;
+
+    @FindBy(xpath = "//section[contains(@class, 'viewImageModal')]")
+    private WebElement mdlViewImg;
+
 
     public static GalleryPage Page() {
         return new GalleryPage();
@@ -61,5 +66,61 @@ public class GalleryPage extends BasePage {
         } catch (TimeoutException e) {
             return false;
         }
+    }
+
+    public boolean isViewImageModalDisplayed() {
+        return mdlViewImg.isDisplayed();
+    }
+
+    public int currentImageNumberDisplayed() {
+        return Integer.parseInt(mdlViewImg.findElement(By.xpath("./div")).getAttribute("data-image"));
+    }
+
+    public int getNextImageNum(int currentImgNum) {
+        int max = countCurrentImage();
+        if (currentImgNum == max) {
+            return 1;
+        } else {
+            return currentImgNum + 1;
+        }
+    }
+
+    public int getPrevImageNum(int currentImgNum) {
+        int max = countCurrentImage();
+        if (currentImgNum == 1) {
+            return max;
+        } else {
+            return currentImgNum - 1;
+        }
+    }
+
+    public void navigateViewImage(int move) {
+        if (move >= 0) {
+            for (int i = 0; i < move; i++) {
+                btnNext.click();
+            }
+        } else {
+            for (int i = 0; i > move; i--) {
+                btnPrev.click();
+            }
+        }
+    }
+
+    public void closeViewImageModal() {
+        btnCloseModal.click();
+    }
+
+    public void removeImage(boolean isRemove) {
+        btnRemove.click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        if (isRemove) {
+            wd.switchTo().alert().accept();
+        } else {
+            wd.switchTo().alert().dismiss();
+        }
+    }
+
+    public void removeImage() {
+        removeImage(true);
     }
 }
