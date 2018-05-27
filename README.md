@@ -9,6 +9,7 @@ The scope of test is to assure following functionality:
 - Upload image
 - View image
 - Delete image
+
 running well on Chrome, Firefox and Edge browser
 
 #### 1.1.2	Out of Scope
