@@ -6,7 +6,7 @@ import org.testng.Assert;
 import pages.GalleryPage;
 
 public class Stepdefs implements En {
-    private static final String TEST_DATA_FOLDER = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\";
+    private static final String TEST_DATA_FOLDER = System.getProperty("user.dir") + "\\src\\testclasses\\resources\\testdata\\";
     private static int numOfImageBef;
     private static int expectedNOImage;
 
