@@ -1,0 +1,3 @@
+1. Use Jenkinsfile (https://github.com/zerah-doan/gallery/blob/master/Jenkinsfile) to create a new pipeline job in Jenkins
+2. Click "Build Now" button to build Jenkins job
+3. Click "Cucumber reports" to view test result
